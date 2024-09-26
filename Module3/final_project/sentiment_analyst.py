@@ -106,8 +106,7 @@ hist_positive = sns.displot(
     aspect=1.1, legend=False
 ).set(title='Words in positive reviews')
 
-plt.show()
-# plt.show(hist_positive)
+plt.show(hist_positive)
 
 # Negative
 hist_negative = sns.displot(
@@ -116,8 +115,7 @@ hist_negative = sns.displot(
     aspect=1.1, legend=False, palette=['red']
 ).set(title='Words in negative reviews')
 
-plt.show()
-# plt.show(hist_negative)
+plt.show(hist_negative)
 
 plt.figure(figsize=(7,7))
 
