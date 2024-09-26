@@ -1,4 +1,4 @@
-!gdown 1zOj808OstnkaWlltM4qKNjjT3iT3yeMN
+# !gdown 1zOj808OstnkaWlltM4qKNjjT3iT3yeMN
 
 import numpy as np
 import pandas as pd
@@ -295,7 +295,7 @@ print('Accuracy for training set for GradientBoostingClassifier = {}'.format(acc
 print('Accuracy for test set for GradientBoostingClassifier = {}'.format(accuracy_for_test))
 
 
-!pip install xgboost
+# !pip install xgboost
 
 # bap tap 8
 ###############################################################################
