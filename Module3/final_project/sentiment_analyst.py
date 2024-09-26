@@ -70,111 +70,111 @@ df['review'] = df['review'].apply(preprocess_text)
 
 df['review'].head()
 
-# import numpy as np
-# import seaborn as sns
-# import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-# # Create autocpt arguments
-# def func(pct, allvalues):
-#     absolute = int(pct / 100.*np.sum(allvalues))
-#     return "{:.1f}%\n({:d})".format(pct, absolute)
+# Create autocpt arguments
+def func(pct, allvalues):
+    absolute = int(pct / 100.*np.sum(allvalues))
+    return "{:.1f}%\n({:d})".format(pct, absolute)
 
-# freq_pos = len(df[df['sentiment'] == 'positive'])
-# freq_neg = len(df[df['sentiment'] == 'negative'])
+freq_pos = len(df[df['sentiment'] == 'positive'])
+freq_neg = len(df[df['sentiment'] == 'negative'])
 
-# data = [freq_pos, freq_neg]
-# labels = ['positive','negative']
+data = [freq_pos, freq_neg]
+labels = ['positive','negative']
 
-# # Create pie chart
-# pie, ax = plt.subplots(figsize=(11, 7))
-# plt.pie(x=data, autopct=lambda pct: func(pct, data),
-#         explode=[0.0025]*2, pctdistance=0.5, colors=[sns.color_palette()[0],'tab:red'], textprops ={'fontsize': 16})
+# Create pie chart
+pie, ax = plt.subplots(figsize=(11, 7))
+plt.pie(x=data, autopct=lambda pct: func(pct, data),
+        explode=[0.0025]*2, pctdistance=0.5, colors=[sns.color_palette()[0],'tab:red'], textprops ={'fontsize': 16})
 
-# labels = [r'Positive', r'Negative']
-# plt.legend(labels, loc='best', prop={'size': 14})
-# plt.savefig("PieChart.png")
-# plt.show()
+labels = [r'Positive', r'Negative']
+plt.legend(labels, loc='best', prop={'size': 14})
+plt.savefig("PieChart.png")
+plt.show()
 
-# words_len = df['review'].str.split().map(lambda x: len(x))
-# df_temp = df.copy()
-# df_temp['words length'] = words_len
+words_len = df['review'].str.split().map(lambda x: len(x))
+df_temp = df.copy()
+df_temp['words length'] = words_len
 
-# # Positive
-# hist_positive = sns.displot(
-#     data=df_temp[df_temp['sentiment'] == 'positive'],
-#     x='words length', hue='sentiment', kde=True, height=7,
-#     aspect=1.1, legend=False
-# ).set(title='Words in positive reviews')
+# Positive
+hist_positive = sns.displot(
+    data=df_temp[df_temp['sentiment'] == 'positive'],
+    x='words length', hue='sentiment', kde=True, height=7,
+    aspect=1.1, legend=False
+).set(title='Words in positive reviews')
 
-# plt.show()
-# # plt.show(hist_positive)
+plt.show()
+# plt.show(hist_positive)
 
-# # Negative
-# hist_negative = sns.displot(
-#     data=df_temp[df_temp['sentiment'] == 'negative'],
-#     x='words length', hue='sentiment', kde=True, height=7,
-#     aspect=1.1, legend=False, palette=['red']
-# ).set(title='Words in negative reviews')
+# Negative
+hist_negative = sns.displot(
+    data=df_temp[df_temp['sentiment'] == 'negative'],
+    x='words length', hue='sentiment', kde=True, height=7,
+    aspect=1.1, legend=False, palette=['red']
+).set(title='Words in negative reviews')
 
-# plt.show()
-# # plt.show(hist_negative)
+plt.show()
+# plt.show(hist_negative)
 
-# plt.figure(figsize=(7,7))
+plt.figure(figsize=(7,7))
 
-# kernel_distribution_number_words_plot = sns.kdeplot(
-#     data=df_temp,
-#     x='words length',
-#     hue='sentiment',
-#     fill=True,
-#     palette=[sns.color_palette()[0],'red']
-# ).set(title='Words in reviews')
+kernel_distribution_number_words_plot = sns.kdeplot(
+    data=df_temp,
+    x='words length',
+    hue='sentiment',
+    fill=True,
+    palette=[sns.color_palette()[0],'red']
+).set(title='Words in reviews')
 
-# plt.legend(title='Sentiment', labels=['negative', 'positive'])
-# plt.show(kernel_distribution_number_words_plot)
+plt.legend(title='Sentiment', labels=['negative', 'positive'])
+plt.show(kernel_distribution_number_words_plot)
 
-# df.head()
+df.head()
 
-# from sklearn.model_selection import train_test_split
-# from sklearn.feature_extraction.text import TfidfVectorizer
-# from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.preprocessing import LabelEncoder
 
-# label_encode = LabelEncoder()
-# x_data = df['review']
-# y_data = label_encode.fit_transform(df['sentiment'])
+label_encode = LabelEncoder()
+x_data = df['review']
+y_data = label_encode.fit_transform(df['sentiment'])
 
-# x_train, x_test, y_train, y_test = train_test_split(
-#     x_data, y_data,
-#     test_size=0.2,
-#     random_state=42
-# )
+x_train, x_test, y_train, y_test = train_test_split(
+    x_data, y_data,
+    test_size=0.2,
+    random_state=42
+)
 
-# tfidf_vectorizer = TfidfVectorizer(max_features=10000)
-# tfidf_vectorizer.fit(x_train, y_train)
+tfidf_vectorizer = TfidfVectorizer(max_features=10000)
+tfidf_vectorizer.fit(x_train, y_train)
 
-# x_train_encoded = tfidf_vectorizer.fit_transform(x_train)
-# x_test_encoded = tfidf_vectorizer.transform(x_test)
+x_train_encoded = tfidf_vectorizer.fit_transform(x_train)
+x_test_encoded = tfidf_vectorizer.transform(x_test)
 
-# from sklearn.tree import DecisionTreeClassifier
-# from sklearn.ensemble import RandomForestClassifier
-# from sklearn.metrics import accuracy_score, classification_report
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
 
-# dt_classifier = DecisionTreeClassifier(
-#     criterion='entropy',
-#     random_state=42
-# )
+dt_classifier = DecisionTreeClassifier(
+    criterion='entropy',
+    random_state=42
+)
 
-# dt_classifier.fit(x_train_encoded, y_train)
-# y_pred = dt_classifier.predict(x_test_encoded)
-# dt_accuracy = accuracy_score(y_pred, y_test)
-# print("Decision Tree Accuracy:", dt_accuracy)
+dt_classifier.fit(x_train_encoded, y_train)
+y_pred = dt_classifier.predict(x_test_encoded)
+dt_accuracy = accuracy_score(y_pred, y_test)
+print("Decision Tree Accuracy:", dt_accuracy)
 
-# rf_classifier = RandomForestClassifier(
-#     n_estimators=100,
-#     criterion='entropy',
-#     random_state=42
-# )
+rf_classifier = RandomForestClassifier(
+    n_estimators=100,
+    criterion='entropy',
+    random_state=42
+)
 
-# rf_classifier.fit(x_train_encoded, y_train)
-# y_pred = rf_classifier.predict(x_test_encoded)
-# rf_accuracy = accuracy_score(y_pred, y_test)
-# print("Random Forest Accuracy:", rf_accuracy)
+rf_classifier.fit(x_train_encoded, y_train)
+y_pred = rf_classifier.predict(x_test_encoded)
+rf_accuracy = accuracy_score(y_pred, y_test)
+print("Random Forest Accuracy:", rf_accuracy)
